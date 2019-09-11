@@ -189,6 +189,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(496, 473);
             this.Controls.Add(this.tableLayoutPanel1);
+            this.MinimumSize = new System.Drawing.Size(300, 300);
             this.Name = "PreviewForm";
             this.Text = "Preview";
             this.Load += new System.EventHandler(this.PreviewForm_Load);

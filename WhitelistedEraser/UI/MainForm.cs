@@ -27,6 +27,7 @@ namespace WhitelistedEraser.UI {
         private void Form1_MainLogicChanged(object sender, EventArgs e) {
             textBox1.Text = MainLogic.WorkingDirectory;
             ListUtil.AssignCheckedListBoxItems(checkedListBox1, MainLogic.SubfolderPaths.ToList(), MainLogic.WhitelistedSubfolderPaths.ToList());
+            NextButton.Enabled = System.IO.Directory.Exists(MainLogic.WorkingDirectory);
         }
 
         private void button2_Click(object sender, EventArgs e) {
@@ -84,6 +85,26 @@ namespace WhitelistedEraser.UI {
         private void button5_Click(object sender, EventArgs e) {
             foreach (string folder in MainLogic.SubfolderPaths) {
                 _setCheckState(folder, false);
+            }
+        }
+
+        private void MainForm_DragEnter(object sender, DragEventArgs e) {
+            if (e.Data.GetDataPresent(DataFormats.FileDrop)) {
+                string[] files = (string[])e.Data.GetData(DataFormats.FileDrop);
+                if (files.Length == 1) {
+                    e.Effect = DragDropEffects.Copy;
+                }
+            }
+        }
+
+        private void MainForm_DragDrop(object sender, DragEventArgs e) {
+            string[] files = (string[])e.Data.GetData(DataFormats.FileDrop);
+            if (files.Length == 1) {
+                if (System.IO.Directory.Exists(files[0])) {
+                    MainLogic.WorkingDirectory = files[0];
+                } else {
+                    MainLogic.WorkingDirectory = System.IO.Path.GetDirectoryName(files[0]);
+                }
             }
         }
     }

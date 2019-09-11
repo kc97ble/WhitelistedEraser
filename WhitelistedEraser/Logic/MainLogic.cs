@@ -13,12 +13,12 @@ namespace WhitelistedEraser.Logic {
         public event EventHandler OnChange;
         private void Changed(object sender, EventArgs e) => OnChange(this, e);
 
-        private string workingDirectory;
+        private string _workingDirectory;
         public string WorkingDirectory {
-            get { return workingDirectory; }
+            get { return _workingDirectory; }
             set {
-                if (workingDirectory == value) return;
-                workingDirectory = value;
+                if (_workingDirectory == value) return;
+                _workingDirectory = value;
                 FetchSubfolderPaths();
                 OnChange(this, EventArgs.Empty);
             }
@@ -28,8 +28,12 @@ namespace WhitelistedEraser.Logic {
         public ObservableCollection<string> WhitelistedSubfolderPaths { get; } = new ObservableCollection<string>();
 
         public void FetchSubfolderPaths() {
+            if (_workingDirectory == "") {
+                SubfolderPaths.Clear();
+                return;
+            }
             try {
-                List<string> result = FileUtil.FetchAllDirectories(workingDirectory);
+                List<string> result = FileUtil.FetchAllDirectories(_workingDirectory);
                 ListUtil.AssignList(SubfolderPaths, result);
                 OnChange(this, EventArgs.Empty);
             } catch (Exception e) {

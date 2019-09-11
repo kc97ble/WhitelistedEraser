@@ -106,12 +106,14 @@
             // 
             this.StopButton.AutoSize = true;
             this.StopButton.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.StopButton.Location = new System.Drawing.Point(171, 3);
+            this.StopButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.StopButton.Location = new System.Drawing.Point(169, 3);
+            this.StopButton.MinimumSize = new System.Drawing.Size(100, 0);
             this.StopButton.Name = "StopButton";
             this.StopButton.Padding = new System.Windows.Forms.Padding(5);
-            this.StopButton.Size = new System.Drawing.Size(112, 33);
+            this.StopButton.Size = new System.Drawing.Size(119, 33);
             this.StopButton.TabIndex = 0;
-            this.StopButton.Text = "Emergency STOP";
+            this.StopButton.Text = "Emergency Stop";
             this.StopButton.UseVisualStyleBackColor = true;
             this.StopButton.Click += new System.EventHandler(this.StopButton_Click);
             // 
@@ -119,10 +121,11 @@
             // 
             this.CloseButton.AutoSize = true;
             this.CloseButton.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.CloseButton.Location = new System.Drawing.Point(289, 3);
+            this.CloseButton.Location = new System.Drawing.Point(294, 3);
+            this.CloseButton.MinimumSize = new System.Drawing.Size(100, 0);
             this.CloseButton.Name = "CloseButton";
             this.CloseButton.Padding = new System.Windows.Forms.Padding(5);
-            this.CloseButton.Size = new System.Drawing.Size(53, 33);
+            this.CloseButton.Size = new System.Drawing.Size(100, 33);
             this.CloseButton.TabIndex = 1;
             this.CloseButton.Text = "Close";
             this.CloseButton.UseVisualStyleBackColor = true;
@@ -132,10 +135,12 @@
             // 
             this.StartButton.AutoSize = true;
             this.StartButton.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.StartButton.Location = new System.Drawing.Point(116, 3);
+            this.StartButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.StartButton.Location = new System.Drawing.Point(63, 3);
+            this.StartButton.MinimumSize = new System.Drawing.Size(100, 0);
             this.StartButton.Name = "StartButton";
             this.StartButton.Padding = new System.Windows.Forms.Padding(5);
-            this.StartButton.Size = new System.Drawing.Size(49, 33);
+            this.StartButton.Size = new System.Drawing.Size(100, 33);
             this.StartButton.TabIndex = 2;
             this.StartButton.Text = "Start";
             this.StartButton.UseVisualStyleBackColor = true;
@@ -202,6 +207,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(464, 441);
             this.Controls.Add(this.tableLayoutPanel1);
+            this.MinimumSize = new System.Drawing.Size(400, 200);
             this.Name = "DeletingForm";
             this.Text = "Delete";
             this.Load += new System.EventHandler(this.DeletingForm_Load);

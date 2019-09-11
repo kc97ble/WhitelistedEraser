@@ -41,7 +41,7 @@ namespace WhitelistedEraser.Logic {
                 .Select(file => _basename(file))
                 .ToList();
             List<string> result = filePaths
-                .Where(file => whiteBasenames.Any(name => name.Contains(_basename(file))))
+                .Where(file => whiteBasenames.Any(name => name.IndexOf(_basename(file), StringComparison.OrdinalIgnoreCase) >= 0))
                 .ToList();
             return result;
         }

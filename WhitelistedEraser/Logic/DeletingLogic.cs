@@ -45,8 +45,11 @@ namespace WhitelistedEraser.Logic {
                 }
                 try {
                     report(string.Format("Deleting {0}...", file));
-                    // System.IO.File.Delete(file);
-                    System.Threading.Thread.Sleep(2000);
+                    System.IO.File.Delete(file);
+                    //System.Threading.Thread.Sleep(2000);
+                    //if (Environment.TickCount % 100 != 0) {
+                    //    throw new Exception("yay");
+                    //}
                     CompletedFileCount += 1;
                     successCount += 1;
                     report("Deleted");
@@ -70,7 +73,7 @@ namespace WhitelistedEraser.Logic {
         public void Start() {
             if (Status != DeletingStatus.Ready)
                 throw new Exception("Can only call if progress = Ready");
-            
+
             _worker.WorkerReportsProgress = true;
             _worker.WorkerSupportsCancellation = true;
             _worker.DoWork += _doWork;
