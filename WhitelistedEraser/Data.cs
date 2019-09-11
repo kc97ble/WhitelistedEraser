@@ -37,6 +37,8 @@ namespace WhitelistedEraser {
             }   
         }
 
+        private ObservableCollection<string> FilePaths { get; } = new ObservableCollection<string>();
+
         public Data() {
             SubfolderPaths.CollectionChanged += new NotifyCollectionChangedEventHandler(Changed);
             CheckedSubfolderPaths.CollectionChanged += new NotifyCollectionChangedEventHandler(Changed);

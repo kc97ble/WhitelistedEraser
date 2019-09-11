@@ -9,10 +9,10 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace WhitelistedEraser {
-    public partial class Form1 : Form {
+    public partial class MainForm : Form {
         private Data data;
 
-        public Form1(Data aData) {
+        public MainForm(Data aData) {
             data = aData;
             InitializeComponent();
         }
@@ -58,6 +58,17 @@ namespace WhitelistedEraser {
             } else if (e.NewValue == CheckState.Unchecked && found) {
                 data.CheckedSubfolderPaths.Remove(key);
             }
+        }
+
+        private void tableLayoutPanel4_Paint(object sender, PaintEventArgs e) {
+
+        }
+
+        private void button3_Click(object sender, EventArgs e) {
+            var form = new PreviewForm(data);
+            Console.WriteLine(23476342);
+            form.ShowDialog();
+            Console.WriteLine(93845734);
         }
     }
 }

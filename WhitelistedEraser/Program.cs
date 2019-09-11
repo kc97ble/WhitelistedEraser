@@ -17,7 +17,7 @@ namespace WhitelistedEraser
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             Data data = new Data();
-            Application.Run(new Form1(data));
+            Application.Run(new MainForm(data));
         }
     }
 }
