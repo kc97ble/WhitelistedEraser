@@ -1,15 +1,21 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
+using System.IO;
 
-namespace WhitelistedEraser
-{
-    public class CustomSearcher
-    {
+namespace WhitelistedEraser.Util {
+    class FileUtil {
+        public static List<string> FetchAllDirectories(string path) {
+            return Directory.GetDirectories(path, "*", SearchOption.AllDirectories).ToList();
+        }
+
+        public static List<string> FetchAllFiles(string path) {
+            return Directory.GetFiles(path, "*.*", SearchOption.AllDirectories).ToList();
+        }
+
+        [Obsolete]
         public static List<string> GetDirectories(string path, string searchPattern = "*",
-            SearchOption searchOption = SearchOption.TopDirectoryOnly)
-        {
+            SearchOption searchOption = SearchOption.TopDirectoryOnly) {
             if (searchOption == SearchOption.TopDirectoryOnly)
                 return Directory.GetDirectories(path, searchPattern).ToList();
 
@@ -21,14 +27,11 @@ namespace WhitelistedEraser
             return directories;
         }
 
-        private static List<string> GetDirectories(string path, string searchPattern)
-        {
-            try
-            {
+        [Obsolete]
+        private static List<string> GetDirectories(string path, string searchPattern) {
+            try {
                 return Directory.GetDirectories(path, searchPattern).ToList();
-            }
-            catch (UnauthorizedAccessException)
-            {
+            } catch (UnauthorizedAccessException) {
                 return new List<string>();
             }
         }

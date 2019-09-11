@@ -5,13 +5,13 @@ using System.Collections.Specialized;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using WhitelistedEraser.Util;
 
-namespace WhitelistedEraser {
-    public class Data {
+namespace WhitelistedEraser.Logic {
+    public class MainLogic {
 
-        public EventHandler OnChange { get; set; }
-        private void Changed() { OnChange?.Invoke(this, EventArgs.Empty); }
-        private void Changed(object sender, EventArgs e) { OnChange?.Invoke(this, e); }
+        public event EventHandler OnChange;
+        private void Changed(object sender, EventArgs e) => OnChange(this, e);
 
         private string workingDirectory;
         public string WorkingDirectory {
@@ -20,28 +20,29 @@ namespace WhitelistedEraser {
                 if (workingDirectory == value) return;
                 workingDirectory = value;
                 FetchSubfolderPaths();
-                Changed();
+                OnChange(this, EventArgs.Empty);
             }
         }
 
         public ObservableCollection<string> SubfolderPaths { get; } = new ObservableCollection<string>();
-        public ObservableCollection<string> CheckedSubfolderPaths { get; } = new ObservableCollection<string>();
+        public ObservableCollection<string> WhitelistedSubfolderPaths { get; } = new ObservableCollection<string>();
 
         public void FetchSubfolderPaths() {
             try {
-                List<string> result = CustomSearcher.GetDirectories(workingDirectory, searchOption: System.IO.SearchOption.AllDirectories);
-                Util.AssignList(SubfolderPaths, result);
+                List<string> result = FileUtil.FetchAllDirectories(workingDirectory);
+                ListUtil.AssignList(SubfolderPaths, result);
+                OnChange(this, EventArgs.Empty);
             } catch (Exception e) {
                 Console.Error.WriteLine(e.Message);
                 SubfolderPaths.Clear();
-            }   
+            }
         }
 
         private ObservableCollection<string> FilePaths { get; } = new ObservableCollection<string>();
 
-        public Data() {
-            SubfolderPaths.CollectionChanged += new NotifyCollectionChangedEventHandler(Changed);
-            CheckedSubfolderPaths.CollectionChanged += new NotifyCollectionChangedEventHandler(Changed);
+        public MainLogic() {
+            SubfolderPaths.CollectionChanged += Changed;
+            WhitelistedSubfolderPaths.CollectionChanged += Changed;
         }
     }
 }

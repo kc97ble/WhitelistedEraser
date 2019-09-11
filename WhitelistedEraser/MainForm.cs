@@ -7,24 +7,26 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using WhitelistedEraser.Logic;
+using WhitelistedEraser.Util;
 
 namespace WhitelistedEraser {
     public partial class MainForm : Form {
-        private Data data;
+        private MainLogic MainLogic;
 
-        public MainForm(Data aData) {
-            data = aData;
+        public MainForm(MainLogic mainLogic) {
+            MainLogic = mainLogic;
             InitializeComponent();
         }
 
         private void Form1_Load(object sender, EventArgs e) {
-            data.OnChange = Form1_DataChanged;
-            Form1_DataChanged(this, EventArgs.Empty);
+            MainLogic.OnChange += Form1_MainLogicChanged;
+            Form1_MainLogicChanged(this, EventArgs.Empty);
         }
 
-        private void Form1_DataChanged(object sender, EventArgs e) {
-            textBox1.Text = data.WorkingDirectory;
-            Util.AssignCheckedListBoxItems(checkedListBox1, data.SubfolderPaths.ToList(), data.CheckedSubfolderPaths.ToList());
+        private void Form1_MainLogicChanged(object sender, EventArgs e) {
+            textBox1.Text = MainLogic.WorkingDirectory;
+            ListUtil.AssignCheckedListBoxItems(checkedListBox1, MainLogic.SubfolderPaths.ToList(), MainLogic.WhitelistedSubfolderPaths.ToList());
 
         }
 
@@ -32,31 +34,30 @@ namespace WhitelistedEraser {
             folderBrowserDialog1.ShowNewFolderButton = true;
             DialogResult result = folderBrowserDialog1.ShowDialog();
             if (result == DialogResult.OK) {
-                data.WorkingDirectory = folderBrowserDialog1.SelectedPath;
+                MainLogic.WorkingDirectory = folderBrowserDialog1.SelectedPath;
             }
         }
 
         private void button1_Click(object sender, EventArgs e) {
-            data.FetchSubfolderPaths();
+            MainLogic.FetchSubfolderPaths();
         }
 
         private void textBox1_KeyDown(object sender, KeyEventArgs e) {
             if (e.KeyCode == Keys.Enter) {
-                data.WorkingDirectory = textBox1.Text;
+                MainLogic.WorkingDirectory = textBox1.Text;
             }
         }
 
         private void Form1_FormClosed(object sender, FormClosedEventArgs e) {
-            data.OnChange = null;
         }
 
         private void checkedListBox1_ItemCheck(object sender, ItemCheckEventArgs e) {
-            var key = data.SubfolderPaths[e.Index];
-            var found = data.CheckedSubfolderPaths.Contains(key);
+            var key = MainLogic.SubfolderPaths[e.Index];
+            var found = MainLogic.WhitelistedSubfolderPaths.Contains(key);
             if (e.NewValue == CheckState.Checked && !found) {
-                data.CheckedSubfolderPaths.Add(key);
+                MainLogic.WhitelistedSubfolderPaths.Add(key);
             } else if (e.NewValue == CheckState.Unchecked && found) {
-                data.CheckedSubfolderPaths.Remove(key);
+                MainLogic.WhitelistedSubfolderPaths.Remove(key);
             }
         }
 
@@ -65,7 +66,7 @@ namespace WhitelistedEraser {
         }
 
         private void button3_Click(object sender, EventArgs e) {
-            var form = new PreviewForm(data);
+            var form = new PreviewForm(new Logic.PreviewLogic(MainLogic.WorkingDirectory, MainLogic.SubfolderPaths, MainLogic.WhitelistedSubfolderPaths));
             Console.WriteLine(23476342);
             form.ShowDialog();
             Console.WriteLine(93845734);

@@ -6,8 +6,9 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace WhitelistedEraser {
-    static class Util {
+namespace WhitelistedEraser.Util {
+
+    static class ListUtil {
         public static void AssignCheckedListBoxItems(CheckedListBox box, IList items, IList checkedItems) {
             AssignList(box.Items, items);
             for (int i = 0; i < items.Count; i++) {

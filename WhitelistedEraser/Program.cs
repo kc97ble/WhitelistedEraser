@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using WhitelistedEraser.Logic;
 
 namespace WhitelistedEraser
 {
@@ -16,7 +17,7 @@ namespace WhitelistedEraser
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Data data = new Data();
+            MainLogic data = new MainLogic();
             Application.Run(new MainForm(data));
         }
     }

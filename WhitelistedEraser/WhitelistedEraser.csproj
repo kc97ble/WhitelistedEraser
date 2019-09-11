@@ -46,15 +46,16 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Logic\PreviewLogic.cs" />
     <Compile Include="PreviewForm.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="PreviewForm.Designer.cs">
       <DependentUpon>PreviewForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Util.cs" />
-    <Compile Include="Data.cs" />
-    <Compile Include="CustomSearcher.cs" />
+    <Compile Include="Util\FileUtil.cs" />
+    <Compile Include="Util\ListUtil.cs" />
+    <Compile Include="Logic\MainLogic.cs" />
     <Compile Include="MainForm.cs">
       <SubType>Form</SubType>
     </Compile>
