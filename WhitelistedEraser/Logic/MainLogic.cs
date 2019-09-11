@@ -33,8 +33,8 @@ namespace WhitelistedEraser.Logic {
                 ListUtil.AssignList(SubfolderPaths, result);
                 OnChange(this, EventArgs.Empty);
             } catch (Exception e) {
-                Console.Error.WriteLine(e.Message);
                 SubfolderPaths.Clear();
+                throw;
             }
         }
 

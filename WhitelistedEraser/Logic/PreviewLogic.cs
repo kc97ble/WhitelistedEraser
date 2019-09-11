@@ -36,12 +36,12 @@ namespace WhitelistedEraser.Logic {
             List<string> whiteFolders = WhitelistedSubfolderPaths
                 .Where(path => _isFileInFolder(path, WorkingDirectory))
                 .ToList();
-            List<string> whiteBases = filePaths
+            List<string> whiteBasenames = filePaths
                 .Where(file => whiteFolders.Any(folder => _isFileInFolder(file, folder)))
                 .Select(file => _basename(file))
                 .ToList();
             List<string> result = filePaths
-                .Where(file => whiteBases.Contains(_basename(file)))
+                .Where(file => whiteBasenames.Any(name => name.Contains(_basename(file))))
                 .ToList();
             return result;
         }
