@@ -17,17 +17,30 @@ namespace WhitelistedEraser.UI {
         public MainForm(MainLogic mainLogic) {
             MainLogic = mainLogic;
             InitializeComponent();
+            MainLogic.OnChange += Form1_MainLogicChanged;
+            Form1_MainLogicChanged(this, EventArgs.Empty);
+            tableLayoutPanel5.Visible = false;
+            CheckListBoxPlaceholder.Dock = DockStyle.Fill;
         }
 
         private void Form1_Load(object sender, EventArgs e) {
-            MainLogic.OnChange += Form1_MainLogicChanged;
-            Form1_MainLogicChanged(this, EventArgs.Empty);
+            
         }
 
         private void Form1_MainLogicChanged(object sender, EventArgs e) {
             textBox1.Text = MainLogic.WorkingDirectory;
-            ListUtil.AssignCheckedListBoxItems(checkedListBox1, MainLogic.SubfolderPaths.ToList(), MainLogic.WhitelistedSubfolderPaths.ToList());
-            NextButton.Enabled = System.IO.Directory.Exists(MainLogic.WorkingDirectory);
+            ListUtil.AssignCheckedListBoxItems(CheckedListBox, MainLogic.SubfolderPaths.ToList(), MainLogic.WhitelistedSubfolderPaths.ToList());
+
+            var canGo = System.IO.Directory.Exists(MainLogic.WorkingDirectory);
+            NextButton.Enabled = canGo;
+            CheckAllButton.Visible = canGo;
+            UncheckAllButton.Visible = canGo;
+            ReloadButton.Visible = canGo;
+            CheckedListBox.Visible = canGo;
+            CheckedListBoxLabel.Visible = canGo;
+            AboutButton.Visible = !canGo;
+            tableLayoutPanel5.Visible = tableLayoutPanel5.Visible && !canGo;
+            CheckListBoxPlaceholder.Visible = !canGo;
         }
 
         private void button2_Click(object sender, EventArgs e) {
@@ -76,16 +89,14 @@ namespace WhitelistedEraser.UI {
             MainLogic.FetchSubfolderPaths();
         }
 
-        private void button4_Click(object sender, EventArgs e) {
+        private void CheckAllButton_Click(object sender, EventArgs e) {
             foreach (string folder in MainLogic.SubfolderPaths) {
                 _setCheckState(folder, true);
             }
         }
 
         private void button5_Click(object sender, EventArgs e) {
-            foreach (string folder in MainLogic.SubfolderPaths) {
-                _setCheckState(folder, false);
-            }
+            tableLayoutPanel5.Visible = !tableLayoutPanel5.Visible;
         }
 
         private void MainForm_DragEnter(object sender, DragEventArgs e) {
@@ -105,6 +116,16 @@ namespace WhitelistedEraser.UI {
                 } else {
                     MainLogic.WorkingDirectory = System.IO.Path.GetDirectoryName(files[0]);
                 }
+            }
+        }
+
+        private void tableLayoutPanel5_Paint(object sender, PaintEventArgs e) {
+
+        }
+
+        private void UncheckAll_Click_1(object sender, EventArgs e) {
+            foreach (string folder in MainLogic.SubfolderPaths) {
+                _setCheckState(folder, false);
             }
         }
     }
